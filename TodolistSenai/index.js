@@ -74,6 +74,7 @@ import bodyParser from 'body-parser'; // Use import para body-parser
 import path from 'path';
 import ejs from 'ejs';
 
+
 // Cria uma instância do aplicativo Express
 const app = express();
 
@@ -100,12 +101,20 @@ app.get('/', (req, res) => {
 });
 
 // Rota para deletar uma tarefa
-app.get('/deletar/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10); // Garante que o id é um número
-    if (!isNaN(id) && id >= 0 && id < tasks.length) {
-        tasks = tasks.filter((_, index) => index !== id);
+// app.get('/deletar/:id', (req, res) => {
+//     const id = parseInt(req.params.id, 10); // Garante que o id é um número
+//     if (!isNaN(id) && id >= 0 && id < tasks.length) {
+//         tasks = tasks.filter((_, index) => index !== id);
+//     }
+//     res.render('index', { tasksList: tasks });
+// });
+
+app.get('/deletar/:id', (req,res)=>{
+    const id = parseInt(req.params.id);
+    if(id >= 0 && id < tasks.length){
+        tasks.splice(id,1);
     }
-    res.render('index', { tasksList: tasks });
+    res.redirect('/');
 });
 
 //Rota para adicionar uma tarefa
@@ -120,3 +129,4 @@ app.post('/', (req, res)=>{
 app.listen(5000, () => {
     console.log('Servidor rodando em http://localhost:5000');
 });
+
